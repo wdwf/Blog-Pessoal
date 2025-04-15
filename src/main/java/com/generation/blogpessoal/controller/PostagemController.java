@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Postagem;
 import com.generation.blogpessoal.repository.PostagemRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/postagens")
@@ -32,6 +33,11 @@ public class PostagemController {
     return postagemRepository.findById(id)
         .map(resposta -> ResponseEntity.ok(resposta))
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+  @GetMapping("/titulo")
+  public ResponseEntity<List<Postagem>> getByTitulo(@RequestParam String titulo) {
+    return ResponseEntity.ok(postagemRepository.findAllByTituloContainingIgnoreCase(titulo));
   }
 
 }
