@@ -11,7 +11,7 @@ public class HomeController {
   public String helloWorld() {
     return """
         <h1>Lista</h1>
-        <a href="/postagem">Postagens</a>
+        <a href="/postagens">Postagens</a>
         """;
   }
 }
