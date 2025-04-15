@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -51,4 +52,13 @@ public class PostagemController {
         .body(postagemRepository.save(postagem));
   }
 
+  @PutMapping("/{id}")
+  public ResponseEntity<Postagem> put(@PathVariable Long id, @Valid @RequestBody Postagem postagem) {
+    return postagemRepository.findById(id)
+        .map(resposta -> {
+          postagem.setId(id);
+          return ResponseEntity.ok().body(postagemRepository.save(postagem));
+        })
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
 }
